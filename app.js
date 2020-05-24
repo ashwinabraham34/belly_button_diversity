@@ -1,20 +1,20 @@
-function getPlots(id) {
+function GetData(id) {
     //reading samples.json
-        d3.json("samples.json").then (sampledata =>{
-            console.log(sampledata)
-            var ids = sampledata.samples[0].otu_ids;
-            console.log(ids)
-            var sampleValues =  sampledata.samples[0].sample_values.slice(0,10).reverse();
-            console.log(sampleValues)
-            var labels =  sampledata.samples[0].otu_labels.slice(0,10);
-            console.log (labels)
+        d3.json("samples.json").then(function(data) { 
+            console.log(data);
+            var ids = data.samples[0].otu_ids;
+            console.log(ids);
+            var sampleValues =  data.samples[0].sample_values.slice(0,10).reverse();
+            console.log(sampleValues);
+            var labels =  data.samples[0].otu_labels.slice(0,10);
+            console.log (labels);
         // get only top 10 otu ids for the plot OTU and reversing it. 
-            var OTU_top = ( sampledata.samples[0].otu_ids.slice(0, 10)).reverse();
+            var OTU_top = (data.samples[0].otu_ids.slice(0, 10)).reverse();
         // get the otu id's to the desired form for the plot
             var OTU_id = OTU_top.map(d => "OTU " + d);
             console.log(`OTU IDS: ${OTU_id}`)
          // get the top 10 labels for the plot (horizontal)
-            var labels =  sampledata.samples[0].otu_labels.slice(0,10);
+            var labels = data.samples[0].otu_labels.slice(0,10);
             console.log(`OTU_labels: ${labels}`)
             var trace = {
                 x: sampleValues,
@@ -46,14 +46,14 @@ function getPlots(id) {
         Plotly.newPlot("bar", data, layout);
             // The bubble chart
             var trace1 = {
-                x: sampledata.samples[0].otu_ids,
-                y: sampledata.samples[0].sample_values,
+                x: data.samples[0].otu_ids,
+                y: data.samples[0].sample_values,
                 mode: "markers",
                 marker: {
-                    size: sampledata.samples[0].sample_values,
-                    color: sampledata.samples[0].otu_ids
+                    size: data.samples[0].sample_values,
+                    color: data.samples[0].otu_ids
                 },
-                text:  sampledata.samples[0].otu_labels
+                text: data.samples[0].otu_labels
     
             };
     
@@ -97,7 +97,7 @@ function getPlots(id) {
     }
     // create the function for the change event
     function optionChanged(id) {
-        getPlots(id);
+        GetData(id);
         getDemoInfo(id);
     }
     
@@ -116,7 +116,7 @@ function getPlots(id) {
             });
     
             // call the functions to display the data and the plots to the page
-            getPlots(data.names[0]);
+            GetData(data.names[0]);
             getDemoInfo(data.names[0]);
         });
     }
